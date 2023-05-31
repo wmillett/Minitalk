@@ -6,12 +6,11 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/05/30 20:40:23 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:00:15 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/client.h"
-
 
 static void atob(pid_t serv_pid, char *str)
 {
@@ -31,9 +30,7 @@ static void atob(pid_t serv_pid, char *str)
 		}
 		
 	}
-	
 }
-
 
 static void handle_exit(int type)
 {
