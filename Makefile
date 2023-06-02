@@ -6,7 +6,7 @@
 #    By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 08:48:00 by wmillett          #+#    #+#              #
-#    Updated: 2023/05/30 22:27:46 by wmillett         ###   ########.fr        #
+#    Updated: 2023/06/01 17:21:29 by wmillett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,14 +46,18 @@ OBJS_SERV = $(addprefix ${OBJDIR}, ${SRC_SERV:%.c=%.o})
 #Rules -------------------------------------
 ${OBJDIR}/%.o : %.c
 	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
+${OBJDIR}/client/obj/%.o : client/src/%.c
+	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
+${OBJDIR}/client/obj/%.o : client/src/%.c
+	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
 all: $(NAMEC) $(NAMES)
 $(LIBFT): 
 	@make -C $(LIBFTDIR)
-$(NAMEC): $(OBJS_CLIENT) $(LIBFT)
+$(NAMEC): $(OBJDIR_CLIENT) $(OBJS_CLIENT) $(LIBFT)
 	@$(CC) ${CFLAGS} $(OBJS_CLIENT) -L$(dir $(LIBFT)) -lft -o $(NAMEC)
 	@echo "$(B_GREEN)Client program has been created 🦊$(COLOUR_END)!"
-$(NAMES): $(OBJS_SERV) $(LIBFT)
-	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(NAMEs)
+$(NAMES): $(OBJDIR_SERV) $(OBJS_SERV) $(LIBFT)
+	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(NAMES)
 	@echo "$(B_GREEN)Server program has been created 🦊$(COLOUR_END)!"
 $(OBJDIR_SERV):
 	@$(MK) $(SERVERDIR) $(OBJDIR)
@@ -68,6 +72,13 @@ fclean: clean
 	@echo "$(RED)$(NAME) has been deleted 🗑️$(COLOUR_END)"
 re: fclean all
 .PHONY: all clean fclean re
+
+
+
+
+
+
+
 
 
 
