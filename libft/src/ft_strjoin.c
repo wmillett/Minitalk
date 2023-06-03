@@ -6,11 +6,11 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 19:20:44 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/01 17:30:53 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/02 22:16:38 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/libft.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {

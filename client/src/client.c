@@ -6,7 +6,7 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/01 21:38:41 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:48:49 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,19 @@
 
 static void sendsignal(pid_t serv_pid, int signal_number)
 {
-    kill(serv_pid, signal_number);
+	int i;
+	
+	if (!signal_number)
+	{
+		i = 8;
+		while(i--)
+		{
+			kill(serv_pid,SIGUSR2);
+			usleep(100);
+		}
+	}
+	else
+   		kill(serv_pid, signal_number);
     usleep(100);
 }
 
@@ -41,6 +53,7 @@ static void atob(pid_t serv_pid, char *str)
         }
         i++;
     }
+	sendsignal(serv_pid, 0);
 }
 
 static void received_message(int signal)

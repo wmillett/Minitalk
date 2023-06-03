@@ -6,11 +6,11 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 17:49:55 by wmillett          #+#    #+#             */
-/*   Updated: 2023/05/24 15:20:51 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/02 22:17:38 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/libft.h"
 #include <stdio.h>
 
 int	ft_strlen(char *s)
