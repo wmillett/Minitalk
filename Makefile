@@ -3,28 +3,96 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+         #
+#    By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 08:48:00 by wmillett          #+#    #+#              #
-#    Updated: 2023/06/01 17:21:29 by wmillett         ###   ########.fr        #
+#    Updated: 2023/06/03 21:06:46 by lightyagami      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#Programs ----------------------------
+# #Programs ----------------------------
+# NAMEC = client.a
+# NAMES = server.a
+# NAME = Minitalk
+# #Dependencies -----------------------------
+# LIBFT_A = libft.a
+# #Command variables ------------------------
+# CC = gcc
+# CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
+# MK = mkdir -p
+# RM = rm -rf
+# #Source files ----------------------
+# SRC_SERV = server.c
+# SRC_CLIENT = client.c
+# #Sources directories ----------------------
+# INCDIR = inc/
+# SRCDIR = src/
+# CLIENTDIR = client/
+# SERVERDIR = server/
+# LIBFTDIR = libft/
+# LIBFT = $(addprefix $(LIBFTDIR), $(LIBFT_A))
+# SERVER = $(addprefix $(SERVERDIR), $(NAMES))
+# CLIENT = $(addprefix $(CLIENTDIR), $(NAMEC))
+# VPATH = ${SRCDIR}
+# #Colours -----------------------------------
+# B_BLUE='\033[1;34m'
+# RED=\033[0;31m
+# B_GREEN=\033[1;32m
+# COLOUR_END=\033[0m
+# #Object directories ------------------------
+# OBJDIR = obj/
+# OBJS_CLIENT = $(addprefix ${OBJDIR}, ${SRC_CLIENT:%.c=%.o})
+# OBJS_SERV = $(addprefix ${OBJDIR}, ${SRC_SERV:%.c=%.o})
+# #Rules -------------------------------------
+# ${OBJDIR}/%.o : %.c
+# 	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
+# ${OBJDIR}/client/obj/%.o : client/src/%.c
+# 	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
+# ${OBJDIR}/client/obj/%.o : client/src/%.c
+# 	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
+# all: $(NAMEC) $(NAMES)
+# $(LIBFT): 
+# 	@make -C $(LIBFTDIR)
+# $(NAMEC): $(OBJDIR_CLIENT) $(OBJS_CLIENT) $(LIBFT)
+# 	@$(CC) ${CFLAGS} $(OBJS_CLIENT) -L$(dir $(LIBFT)) -lft -o $(NAMEC)
+# 	@echo "$(B_GREEN)Client program has been created 🦊$(COLOUR_END)!"
+# $(NAMES): $(OBJDIR_SERV) $(OBJS_SERV) $(LIBFT)
+# 	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(NAMES)
+# 	@echo "$(B_GREEN)Server program has been created 🦊$(COLOUR_END)!"
+# $(OBJDIR_SERV):
+# 	@$(MK) $(SERVERDIR) $(OBJDIR)
+# $(OBJDIR_CLIENT):
+# 	@$(MK) $(CLIENTDIR) $(OBJDIR)
+# clean:
+# 	@$(RM) $(CLIENTDIR)$(OBJDIR)
+# 	@$(RM) $(SERVERDIR)$(OBJDIR)
+# 	@make -C $(LIBFTDIR) clean
+# fclean: clean
+# 	@make -C $(LIBFTDIR) fclean
+# 	@echo "$(RED)$(NAME) has been deleted 🗑️$(COLOUR_END)"
+# re: fclean all
+# .PHONY: all clean fclean re
+
+
+# Programs ----------------------------
 NAMEC = client.a
 NAMES = server.a
 NAME = Minitalk
-#Dependencies -----------------------------
+
+# Dependencies -----------------------------
 LIBFT_A = libft.a
-#Command variables ------------------------
+
+# Command variables ------------------------
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 MK = mkdir -p
 RM = rm -rf
-#Source files ----------------------
+
+# Source files ----------------------
 SRC_SERV = server.c
 SRC_CLIENT = client.c
-#Sources directories ----------------------
+
+# Sources directories ----------------------
 INCDIR = inc/
 SRCDIR = src/
 CLIENTDIR = client/
@@ -34,43 +102,58 @@ LIBFT = $(addprefix $(LIBFTDIR), $(LIBFT_A))
 SERVER = $(addprefix $(SERVERDIR), $(NAMES))
 CLIENT = $(addprefix $(CLIENTDIR), $(NAMEC))
 VPATH = ${SRCDIR}
-#Colours -----------------------------------
+
+# Colours -----------------------------------
 B_BLUE='\033[1;34m'
 RED=\033[0;31m
 B_GREEN=\033[1;32m
 COLOUR_END=\033[0m
-#Object directories ------------------------
+
+# Object directories ------------------------
 OBJDIR = obj/
-OBJS_CLIENT = $(addprefix ${OBJDIR}, ${SRC_CLIENT:%.c=%.o})
-OBJS_SERV = $(addprefix ${OBJDIR}, ${SRC_SERV:%.c=%.o})
-#Rules -------------------------------------
-${OBJDIR}/%.o : %.c
-	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
-${OBJDIR}/client/obj/%.o : client/src/%.c
-	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
-${OBJDIR}/client/obj/%.o : client/src/%.c
-	@${CC} ${CFLAGS} -I${INCDIR} $< -o $@
+OBJS_CLIENT = $(patsubst %.c,$(OBJDIR)$(CLIENTDIR)obj/%.o,$(SRC_CLIENT))
+OBJS_SERV = $(patsubst %.c,$(OBJDIR)$(SERVERDIR)obj/%.o,$(SRC_SERV))
+
+# Rules -------------------------------------
+${OBJDIR}$(CLIENTDIR)obj/%.o: $(CLIENTDIR)$(SRCDIR)%.c
+	@${CC} ${CFLAGS} -I${INCDIR} -c $< -o $@
+
+${OBJDIR}$(SERVERDIR)obj/%.o: $(SERVERDIR)$(SRCDIR)%.c
+	@${CC} ${CFLAGS} -I${INCDIR} -c $< -o $@
+
 all: $(NAMEC) $(NAMES)
-$(LIBFT): 
+
+$(LIBFT):
 	@make -C $(LIBFTDIR)
-$(NAMEC): $(OBJDIR_CLIENT) $(OBJS_CLIENT) $(LIBFT)
+
+$(NAMEC): $(OBJS_CLIENT) $(LIBFT)
 	@$(CC) ${CFLAGS} $(OBJS_CLIENT) -L$(dir $(LIBFT)) -lft -o $(NAMEC)
 	@echo "$(B_GREEN)Client program has been created 🦊$(COLOUR_END)!"
-$(NAMES): $(OBJDIR_SERV) $(OBJS_SERV) $(LIBFT)
+
+$(NAMES): $(OBJS_SERV) $(LIBFT)
 	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(NAMES)
 	@echo "$(B_GREEN)Server program has been created 🦊$(COLOUR_END)!"
-$(OBJDIR_SERV):
-	@$(MK) $(SERVERDIR) $(OBJDIR)
-$(OBJDIR_CLIENT):
-	@$(MK) $(CLIENTDIR) $(OBJDIR)
+
+$(OBJS_CLIENT): | $(OBJDIR)$(CLIENTDIR)obj
+$(OBJS_SERV): | $(OBJDIR)$(SERVERDIR)obj
+
+$(OBJDIR)$(CLIENTDIR)obj:
+	@$(MK) $@
+
+$(OBJDIR)$(SERVERDIR)obj:
+	@$(MK) $@
+
 clean:
-	@$(RM) $(CLIENTDIR)$(OBJDIR)
-	@$(RM) $(SERVERDIR)$(OBJDIR)
+	@$(RM) $(OBJDIR)
 	@make -C $(LIBFTDIR) clean
+
 fclean: clean
+	@$(RM) $(NAMEC) $(NAMES)
 	@make -C $(LIBFTDIR) fclean
 	@echo "$(RED)$(NAME) has been deleted 🗑️$(COLOUR_END)"
+
 re: fclean all
+
 .PHONY: all clean fclean re
 
 

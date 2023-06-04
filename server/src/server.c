@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:51:37 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/02 22:20:36 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/03 21:13:13 by lightyagami      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ static void sort_string(int binary[8])
 {
 	static char* str;
 	static int len;
-	static char* temp;
-	char c;
-	int j;
+	// static char* temp;
 	
 	if (!len)
 	{
@@ -85,6 +83,8 @@ int main(int argc, char** argv)
 {
 	pid_t serv_pid;
 
+	if (argc != 1 || argv[1])
+		exit(0);
 	serv_pid = getpid();
 	printf("Server PID: %i\n", serv_pid);
 	signal(SIGUSR1, signalhandler);

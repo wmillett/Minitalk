@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/02 17:48:49 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/03 21:08:18 by lightyagami      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ static void atob(pid_t serv_pid, char *str)
 	sendsignal(serv_pid, 0);
 }
 
-static void received_message(int signal)
-{
-	printf("Message received!\n");
-}
+// static void received_message(int signal)
+// {
+// 	printf("Message received!\n");
+// }
 
 static void handle_exit(int type)
 {
@@ -74,7 +74,7 @@ int main(int argc, char** argv)
 {
 	pid_t serv_pid;
 
-	signal(SIGUSR1, received_message);
+	// signal(SIGUSR1, received_message);
 	if (argc != 3)
 		handle_exit(1);
 	serv_pid = ft_atoi(argv[1]);
