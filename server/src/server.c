@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:51:37 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/03 21:13:13 by lightyagami      ###   ########.fr       */
+/*   Updated: 2023/06/05 16:05:45 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 
 pid_t sender_pid;
 
-static void print_string(char* str)
+static void print_string(char* str, int len)
 {
-	printf("%s\n", str);
+	write(2, str, (len + 1));
+	write(2, "\n", 1);
+	// printf("%s\n", str);
 }
-
-
 
 static char btoa(int binary[8])
 {
@@ -36,6 +36,7 @@ static char btoa(int binary[8])
    		c |= (binary[j] & 1) << j;
 		j++;
 	}
+	// printf("c: %c\n", c);
 	return(c);
 }
 
@@ -43,25 +44,42 @@ static void sort_string(int binary[8])
 {
 	static char* str;
 	static int len;
-	// static char* temp;
+	static char *copy;
+	// t_mem *list;
 	
 	if (!len)
 	{
 		len = 0;
-		str = (char*)malloc(sizeof((char) + 110000000));
+		str = (char*)malloc(sizeof((char) + 1));
+		// list = malloc(sizeof(t_mem*));
 	}
+	else
+	{
+		copy = (char*)malloc(sizeof((char) + (len + 1)));
+		ft_strlcpy(copy, str, (len + 1));
+		free(str);
+		str = (char*)malloc(sizeof((char) + (len + 2)));
+		ft_strlcpy(str, copy, (len + 1));
+	}
+
 	// if (len && len % 10 == 0)
 	// {
 	// 	temp = str;
 	// 	free(temp);
 	// 	str = (char*)malloc(sizeof((char) + (len + (len / 10) + 11)));
 	// }
-		str[len] = btoa(binary);
-		if (str[len] == '\0')
-			print_string(str);
-		// else
-		// 	write(2,&str[len], 1);
-		len++;
+	str[len] = btoa(binary);
+	if (str[len] == '\0')
+	{
+		print_string(str, len);
+		free(str);
+		len = 0;
+		return ;
+	}
+	// else
+	// 	write(2,&str[len], 1);
+	// printf("len: %i\n", len);
+	len++;
 }
 
 void signalhandler(int signal)

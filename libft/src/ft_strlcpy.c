@@ -1,24 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.h                                           :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 17:50:54 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/05 14:53:50 by wmillett         ###   ########.fr       */
+/*   Created: 2023/01/25 19:15:48 by wmillett          #+#    #+#             */
+/*   Updated: 2023/06/05 15:36:48 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_H
-# define SERVER_H
+#include "../inc/libft.h"
 
-# include "../../libft/inc/libft.h"
-
-typedef struct s_mem
+int	ft_strlcpy(char *dst, char *src, int dstsize)
 {
-	char *c;
-	struct t_mem *next;
-}				t_mem;
+	int	i;
+	int	r;
 
-#endif
+	if (!dst || !src)
+		return (0);
+	i = 0;
+	r = ft_strlen(src);
+	while (i < dstsize)
+	{
+		if (!src[i])
+		{
+			dst[i] = '\0';
+			break ;
+		}
+		else
+			dst[i] = src[i];
+		++i;
+	}
+	if (i == dstsize)
+		--i;
+	if (dstsize)
+		dst[i] = 0;
+	return (r);
+}

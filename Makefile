@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+         #
+#    By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 08:48:00 by wmillett          #+#    #+#              #
-#    Updated: 2023/06/03 21:06:46 by lightyagami      ###   ########.fr        #
+#    Updated: 2023/06/05 14:58:19 by wmillett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -128,11 +128,11 @@ $(LIBFT):
 
 $(NAMEC): $(OBJS_CLIENT) $(LIBFT)
 	@$(CC) ${CFLAGS} $(OBJS_CLIENT) -L$(dir $(LIBFT)) -lft -o $(NAMEC)
-	@echo "$(B_GREEN)Client program has been created 🦊$(COLOUR_END)!"
+	@echo "$(B_GREEN)Client program has been created 💻$(COLOUR_END)!"
 
 $(NAMES): $(OBJS_SERV) $(LIBFT)
 	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(NAMES)
-	@echo "$(B_GREEN)Server program has been created 🦊$(COLOUR_END)!"
+	@echo "$(B_GREEN)Server program has been created 🖨$(COLOUR_END)!"
 
 $(OBJS_CLIENT): | $(OBJDIR)$(CLIENTDIR)obj
 $(OBJS_SERV): | $(OBJDIR)$(SERVERDIR)obj
