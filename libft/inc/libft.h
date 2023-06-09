@@ -6,7 +6,7 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 16:21:13 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/05 15:37:10 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:44:34 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ typedef struct s_info
 }			t_all;
 
 int			ft_strlen(char *s);
-char		*ft_strdup(char *src, char *dst);
-char		*ft_itoa(int n);
 int			ft_atoi(const char *str);
-void		*ft_calloc(size_t count, size_t size);
-char		*ft_strjoin(char *s1, char *s2);
-int			ft_strlcpy(char *dst, char *src, int dstsize);
+char		*ft_strncpy(char *dest, char *src, unsigned int n);
 #endif

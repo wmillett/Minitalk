@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   server_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/25 19:06:43 by wmillett          #+#    #+#             */
-/*   Updated: 2023/05/28 19:28:55 by wmillett         ###   ########.fr       */
+/*   Created: 2023/06/09 16:34:21 by wmillett          #+#    #+#             */
+/*   Updated: 2023/06/09 16:36:01 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/server.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	print_string(char *str, int len)
 {
-	char	*p;
-	size_t	i;
+	write(2, str, (len));
+	write(2, "\n", 1);
+}
 
-	i = 0;
-	p = malloc(count * size);
-	if (!p)
-		return (NULL);
-	while (i < (count * size))
+char	btoa(int binary[8])
+{
+	int		j;
+	char	c;
+
+	c = 0;
+	j = 0;
+	while (j < 8)
 	{
-		p[i] = '\0';
-		i++;
+		c |= (binary[j] & 1) << j;
+		j++;
 	}
-	return (p);
+	return (c);
 }
