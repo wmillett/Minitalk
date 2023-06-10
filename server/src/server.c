@@ -6,20 +6,20 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:51:37 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/09 16:38:02 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:29:16 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/server.h"
 #include <signal.h>
 
+pid_t clientPID;
+
 static void	free_quit(char *tofree, int len)
 {
 	if (tofree)
 		free(tofree);
-	write(2, "\033[1;31m", 7);
-	printf("Failed memory allocation at '%i'.\n", len);
-	write(2, "\033[0m", 4);
+	printf("\033[1;31mFailed memory allocation at '%i'.\033[0m\n", len);
 	exit(0);
 }
 
@@ -29,9 +29,7 @@ static int	sort_mem(int type, char *copy, char *str, int len)
 	{
 		if (str == NULL)
 		{
-			write(2, "\033[1;31m", 7);
-			printf("Failed initial memory allocation.\n");
-			write(2, "\033[0m", 4);
+			printf("\033[1;31mFailed initial memory allocation.\033[0m\n");
 			exit(0);
 		}
 	}
@@ -44,7 +42,7 @@ static int	sort_mem(int type, char *copy, char *str, int len)
 	}
 	if (type == 3)
 	{
-		if (copy == NULL)
+		if (str == NULL)
 			free_quit(copy, len);
 		ft_strncpy(str, copy, len + 1);
 		free(copy);
@@ -74,45 +72,16 @@ static void	sort_string(int binary[8])
 	if (str[len] == '\0')
 	{
 		print_string(str, len);
-		free(str);
+		kill(clientPID, SIGUSR1);
 		len = 0;
 		return ;
 	}
 	len++;
 }
 
-// static void sort_string(int binary[8])
-// {
-// 	static char* str;
-// 	static int len;
-// 	char* copy;
-
-// 	if (!len)
-// 	{
-// 		str = (char*)malloc(sizeof(char) + 1);
-// 		len = sort_mem(1, NULL, str);
-// 	}
-// 	else
-// 	{
-// 		copy = (char*)malloc(sizeof(char) * (len + 1));
-// 		ft_strncpy(copy, str, len + 1);
-// 		free(str);
-// 		str = (char*)malloc(sizeof(char) * (len + 2));
-// 		ft_strncpy(str, copy, len + 1);
-// 		free(copy);
-// 	}
-// 	str[len] = btoa(binary);
-// 	if (str[len] == '\0')
-// 	{
-// 		print_string(str, len);
-// 		len = 0;
-// 		return ;
-// 	}
-// 	len++;
-// }
-
-static void	signalhandler(int signal)
+static void	signalhandler(int signal, siginfo_t *info, void *context)
 {
+	int j;
 	static int	i;
 	static int	binary[8];
 
@@ -124,25 +93,28 @@ static void	signalhandler(int signal)
 		binary[--i] = 1;
 	if (!i)
 		sort_string(binary);
+	clientPID = info->si_pid;
+	if (context)
+		j = 0;
 }
 
 int	main(int argc, char **argv)
 {
 	pid_t	serv_pid;
+	struct sigaction sa;
 
 	if (argc != 1 || argv[1])
 	{
-		write(2, "\033[1;31m", 7);
-		printf("Wrong number of arguments.\n");
-		write(2, "\033[0m", 4);
+		printf("\033[1;31mWrong number of arguments.\033[0m\n");
 		exit(0);
 	}
 	serv_pid = getpid();
 	printf("Server PID: %i\n", serv_pid);
-	signal(SIGUSR1, signalhandler);
-	signal(SIGUSR2, signalhandler);
+    sa.sa_sigaction = signalhandler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = SA_SIGINFO;
+    sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
-	{
 		pause();
-	}
 }
