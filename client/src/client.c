@@ -6,7 +6,7 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/09 21:18:28 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/11 21:41:47 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include <signal.h>
 #include <stdio.h>
 
-static void	sendsignal(pid_t serv_pid, int signal_number)
+int			g_initm = 0;
+
+static void	sendsignal(pid_t serv_pid, int signal_number, int time)
 {
 	int	i;
 
@@ -24,15 +26,15 @@ static void	sendsignal(pid_t serv_pid, int signal_number)
 		while (i--)
 		{
 			kill(serv_pid, SIGUSR1);
-			usleep(50);
+			usleep(time);
 		}
 	}
 	else
 		kill(serv_pid, signal_number);
-	usleep(50);
+	usleep(time);
 }
 
-static void	atob(pid_t serv_pid, char *str)
+static void	atob(pid_t serv_pid, char *str, int time)
 {
 	int		i;
 	char	c;
@@ -46,45 +48,65 @@ static void	atob(pid_t serv_pid, char *str)
 		while (bit >= 0)
 		{
 			if ((c >> bit) & 1)
-				sendsignal(serv_pid, SIGUSR2);
+				sendsignal(serv_pid, SIGUSR2, time);
 			else
-				sendsignal(serv_pid, SIGUSR1);
+				sendsignal(serv_pid, SIGUSR1, time);
 			bit--;
 		}
 		i++;
 	}
-	sendsignal(serv_pid, 0);
+	sendsignal(serv_pid, 0, time);
 }
 
 static void	handle_exit(int type)
 {
 	if (type == 1)
 		printf("\033[1;31mWrong number of arguments.\033[0m\n");
+	if (type == 2)
+	{
+		printf("\033[1;31mWrong server PID or server error.\033[0m\n");
+	}
+	if (type == 3)
+		printf("\033[1;31mServer error: could not receive the message.\033[0m\n");
 	exit(0);
 }
 
-static void sighandler(int signum)
+static void	sighandler(int signum)
 {
-    if (signum == SIGUSR1)
-        printf("\033[34mMessage received !\033[0m\n");
+	if (signum == SIGUSR1)
+	{
+		printf("\033[1;34mMessage received sucessfully!\033[0m\n");
+		exit(0);
+	}
+	if (signum == SIGUSR2)
+	{
+		printf("\033[1;35mServer connection established.\033[0m\n");
+		g_initm = 1;
+	}
 }
 
 int	main(int argc, char **argv)
 {
-	pid_t	serv_pid;
-	int 	time;
-	
-	struct sigaction sa;
-	
+	pid_t				serv_pid;
+	int					len;
+	int					time;
+	struct sigaction	sa;
+
 	sa.sa_handler = sighandler;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sigaction(SIGUSR1, &sa, NULL);
-	
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	if (argc != 3)
 		handle_exit(1);
 	serv_pid = ft_atoi(argv[1]);
-	time = ft_strlen(argv[2]) * 200;
-	atob(serv_pid, argv[2]);
-	usleep(time);
+	len = ft_strlen(argv[2]);
+	time = sort_time(len);
+	atob(serv_pid, argv[2], time);
+	if (g_initm)
+		usleep(len * time);
+	else
+		handle_exit(2);
+	sleep(1);
+	handle_exit(3);
 }

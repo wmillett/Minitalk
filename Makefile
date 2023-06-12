@@ -6,7 +6,7 @@
 #    By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 08:48:00 by wmillett          #+#    #+#              #
-#    Updated: 2023/06/09 16:37:03 by wmillett         ###   ########.fr        #
+#    Updated: 2023/06/11 20:53:36 by wmillett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ MK = mkdir -p
 RM = rm -rf
 # Source files ----------------------
 SRC_SERV = server.c server_utils.c
-SRC_CLIENT = client.c
+SRC_CLIENT = client.c client_utils.c
 # Sources directories ----------------------
 INCDIR = inc/
 SRCDIR = src/
