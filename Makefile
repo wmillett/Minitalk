@@ -6,11 +6,13 @@
 #    By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 08:48:00 by wmillett          #+#    #+#              #
-#    Updated: 2023/06/11 20:53:36 by wmillett         ###   ########.fr        #
+#    Updated: 2023/06/12 22:20:41 by wmillett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Programs ----------------------------
+CNAME = client
+SNAME = server
 NAMEC = client.a
 NAMES = server.a
 NAME = Minitalk
@@ -27,8 +29,8 @@ SRC_CLIENT = client.c client_utils.c
 # Sources directories ----------------------
 INCDIR = inc/
 SRCDIR = src/
-CLIENTDIR = client/
-SERVERDIR = server/
+CLIENTDIR = m_client/
+SERVERDIR = m_server/
 LIBFTDIR = libft/
 LIBFT = $(addprefix $(LIBFTDIR), $(LIBFT_A))
 SERVER = $(addprefix $(SERVERDIR), $(NAMES))
@@ -56,11 +58,11 @@ $(LIBFT):
 	@make -C $(LIBFTDIR)
 
 $(NAMEC): $(OBJS_CLIENT) $(LIBFT)
-	@$(CC) ${CFLAGS} $(OBJS_CLIENT) -L$(dir $(LIBFT)) -lft -o $(NAMEC)
+	@$(CC) ${CFLAGS} $(OBJS_CLIENT) -L$(dir $(LIBFT)) -lft -o $(CNAME)
 	@echo "$(B_GREEN)Client program has been created 💻$(COLOUR_END)!"
 
 $(NAMES): $(OBJS_SERV) $(LIBFT)
-	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(NAMES)
+	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(SNAME)
 	@echo "$(B_GREEN)Server program has been created 🖨 $(COLOUR_END)!"
 
 $(OBJS_CLIENT): | $(OBJDIR)$(CLIENTDIR)obj

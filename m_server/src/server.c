@@ -6,7 +6,7 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:51:37 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/11 21:42:12 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:15:54 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	sort_string(int binary[8])
 
 	if (!len)
 	{
-		kill(g_clientpid, SIGUSR2);
 		str = (char *)malloc(sizeof(char) + 1);
 		len = sort_mem(1, NULL, str, 0);
 	}
@@ -94,6 +93,7 @@ static void	signalhandler(int signal, siginfo_t *info, void *context)
 	if (!i)
 		sort_string(binary);
 	g_clientpid = info->si_pid;
+	kill(g_clientpid, SIGUSR2);
 	if (context)
 		j = 0;
 }

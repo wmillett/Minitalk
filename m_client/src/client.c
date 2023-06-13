@@ -6,7 +6,7 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/11 21:41:47 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:17:07 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ static void	handle_exit(int type)
 
 static void	sighandler(int signum)
 {
+	static int i;
+	
+	if (!g_initm)
+		i = 0;
 	if (signum == SIGUSR1)
 	{
 		printf("\033[1;34mMessage received sucessfully!\033[0m\n");
@@ -80,7 +84,9 @@ static void	sighandler(int signum)
 	}
 	if (signum == SIGUSR2)
 	{
-		printf("\033[1;35mServer connection established.\033[0m\n");
+		if (!i)
+			printf("\033[1;35mServer connection established.\033[0m\n");
+		i = 1;
 		g_initm = 1;
 	}
 }
