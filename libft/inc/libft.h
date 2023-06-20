@@ -6,7 +6,7 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 16:21:13 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/09 16:44:34 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:26:42 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 # include <unistd.h>
 
 # define ERROR -1
-
+# define TRUE 1
+# define FALSE 0
+# define SUCCESS 1
+# define FAILURE 0
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif

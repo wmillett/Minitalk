@@ -6,15 +6,13 @@
 #    By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 08:48:00 by wmillett          #+#    #+#              #
-#    Updated: 2023/06/12 22:20:41 by wmillett         ###   ########.fr        #
+#    Updated: 2023/06/20 18:30:03 by wmillett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Programs ----------------------------
-CNAME = client
-SNAME = server
-NAMEC = client.a
-NAMES = server.a
+NAMEC = client
+NAMES = server
 NAME = Minitalk
 # Dependencies -----------------------------
 LIBFT_A = libft.a
@@ -58,11 +56,11 @@ $(LIBFT):
 	@make -C $(LIBFTDIR)
 
 $(NAMEC): $(OBJS_CLIENT) $(LIBFT)
-	@$(CC) ${CFLAGS} $(OBJS_CLIENT) -L$(dir $(LIBFT)) -lft -o $(CNAME)
+	@$(CC) ${CFLAGS} $(OBJS_CLIENT) -L$(dir $(LIBFT)) -lft -o $(NAMEC)
 	@echo "$(B_GREEN)Client program has been created 💻$(COLOUR_END)!"
 
 $(NAMES): $(OBJS_SERV) $(LIBFT)
-	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(SNAME)
+	@$(CC) ${CFLAGS} $(OBJS_SERV) -L$(dir $(LIBFT)) -lft -o $(NAMES)
 	@echo "$(B_GREEN)Server program has been created 🖨 $(COLOUR_END)!"
 
 $(OBJS_CLIENT): | $(OBJDIR)$(CLIENTDIR)obj
