@@ -6,7 +6,7 @@
 #    By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 08:48:00 by wmillett          #+#    #+#              #
-#    Updated: 2023/06/20 18:30:03 by wmillett         ###   ########.fr        #
+#    Updated: 2023/06/20 20:59:29 by wmillett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 MK = mkdir -p
 RM = rm -rf
 # Source files ----------------------
-SRC_SERV = server.c server_utils.c
+SRC_SERV = server.c server_utils.c server_exit.c
 SRC_CLIENT = client.c client_utils.c
 # Sources directories ----------------------
 INCDIR = inc/

@@ -6,7 +6,7 @@
 #    By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/17 11:55:15 by wmillett          #+#    #+#              #
-#    Updated: 2023/06/09 16:44:43 by wmillett         ###   ########.fr        #
+#    Updated: 2023/06/20 20:59:15 by wmillett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ SRCDIR = src
 
 SRC =	ft_strlen.c\
 		ft_atoi.c\
-		ft_strncpy.c\
 
 VPATH = ${SRCDIR}
 OBJDIR = obj

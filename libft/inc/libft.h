@@ -6,7 +6,7 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 16:21:13 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/20 17:26:42 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:59:05 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include <stdio.h>
 
 # define ERROR -1
 # define TRUE 1
@@ -39,5 +40,4 @@ typedef struct s_info
 
 int			ft_strlen(char *s);
 int			ft_atoi(const char *str);
-char		*ft_strncpy(char *dest, char *src, unsigned int n);
 #endif

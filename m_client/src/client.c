@@ -6,31 +6,13 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/20 17:51:35 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/20 23:57:08 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/client.h"
-#include <signal.h>
-#include <stdio.h>
 
-static void	sendsignal(pid_t serv_pid, int signal_number, int time)
-{
-	int	i;
-
-	if (!signal_number)
-	{
-		i = 8;
-		while (i--)
-		{
-			kill(serv_pid, SIGUSR1);
-			usleep(time);
-		}
-	}
-	else
-		kill(serv_pid, signal_number);
-	usleep(time);
-}
+t_handle_pid g_serv;
 
 static void	atob(pid_t serv_pid, char *str, int time)
 {
@@ -56,10 +38,34 @@ static void	atob(pid_t serv_pid, char *str, int time)
 	sendsignal(serv_pid, 0, time);
 }
 
+static void	itob(pid_t serv_pid, int len, int time)
+{
+	int	i;
+	int	c;
+	int	bit;
+
+	i = 0;
+	{
+		c = len;
+		bit = 7;
+		while (bit >= 0)
+		{
+			if ((c >> bit) & 1)
+				sendsignal(serv_pid, SIGUSR2, time);
+			else
+				sendsignal(serv_pid, SIGUSR1, time);
+			bit--;
+		}
+		i++;
+	}
+}
+
 static void	handle_exit(int type)
 {
 	if (type == 1)
 		printf("\033[1;31mWrong number of arguments.\033[0m\n");
+	if (type == 2)
+		printf("\033[1;31mWrong server PID or server error.\033[0m\n");
 	if (type == 3)
 		printf("\033[1;31mServer error: could not receive the message.\033[0m\n");
 	exit(0);
@@ -67,19 +73,34 @@ static void	handle_exit(int type)
 
 static void	sighandler(int signum)
 {
+	static int	i;
+	static int count = 0;
+
+	if (!g_serv.initm)
+		i = 0;
 	if (signum == SIGUSR1)
 	{
 		printf("\033[1;34mMessage received sucessfully!\033[0m\n");
 		exit(0);
 	}
 	if (signum == SIGUSR2)
-		printf("\033[1;35mServer connection established.\033[0m\n");
+	{
+		if (!i)
+			printf("\033[1;35mServer connection established.\033[0m\n");
+		i += 1;
+		if (i >= (g_serv.len/10) && g_serv.len > 100)
+		{
+			count += 10;
+			printf("\033[33m[%i%%]\033[0m\n", count);
+			i = 1;
+		}
+		g_serv.initm = 1;
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	pid_t				serv_pid;
-	int					len;
 	int					time;
 	struct sigaction	sa;
 
@@ -88,13 +109,18 @@ int	main(int argc, char **argv)
 	sa.sa_flags = 0;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
+	g_serv.initm = 0;
 	if (argc != 3)
 		handle_exit(1);
 	serv_pid = ft_atoi(argv[1]);
-	len = ft_strlen(argv[2]);
-	time = sort_time(len);
+	g_serv.len = ft_strlen(argv[2]);
+	time = sort_time(g_serv.len);
+	itob(serv_pid, g_serv.len, time);
 	atob(serv_pid, argv[2], time);
-	usleep(len * time);
-	usleep(5000000);
+	usleep(500);
+	if (g_serv.initm)
+		usleep(g_serv.len * time);
+	else
+		handle_exit(2);
 	handle_exit(3);
 }

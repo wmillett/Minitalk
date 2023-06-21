@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncpy.c                                       :+:      :+:    :+:   */
+/*   server_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 15:46:20 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/09 15:46:35 by wmillett         ###   ########.fr       */
+/*   Created: 2023/06/20 20:53:31 by wmillett          #+#    #+#             */
+/*   Updated: 2023/06/20 20:54:41 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int	i;
+#include "../inc/server.h"
 
-	i = 0;
-	while (src[i] != '\0' && i < n)
+void	check_args(int argc, char **argv)
+{
+	if (argc != 1 || argv[1])
 	{
-		dest[i] = src[i];
-		i++;
+		printf("\033[1;31mWrong number of arguments.\033[0m\n");
+		exit(0);
 	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
+	set_toreset();
+}
+
+int	print_string(char *str, int len)
+{
+	write(2, str, len);
+	write(2, "\n", 1);
+	free(str);
+	set_toreset();
+	return (0);
 }
