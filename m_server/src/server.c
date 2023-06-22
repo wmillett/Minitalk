@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:51:37 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/20 23:59:37 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/22 01:51:42 by lightyagami      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv)
 	{
 		if (g_clientpid.active)
 		{
-			if (g_clientpid.tick++ > 100000)
+			if (g_clientpid.tick++ > 20000)
 			{
 				reset_server();
 				set_toreset();

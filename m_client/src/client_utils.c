@@ -6,7 +6,7 @@
 /*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 20:49:52 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/21 23:48:16 by lightyagami      ###   ########.fr       */
+/*   Updated: 2023/06/22 01:32:33 by lightyagami      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	sort_time(int len)
 	if (len <= 1000)
 		time = 50;
 	else if (len <= 10000)
-		time = 100;
+		time = 75;
 	else if (len <= 50000)
 		time = 250;
 	else if (len <= 100000)
-		time = 350;
+		time = 400;
 	else
-		time = 450;
+		time = 550;
 	return (time);
 }
 
@@ -47,13 +47,12 @@ void	sendsignal(pid_t serv_pid, int signal_number, int time)
 	usleep(time);
 }
 
-void print_prog(int count)
+void print_prog(int count, int len)
 {
-	if (count == 0)
-	{
+	if (!count)
 		printf("\033[1;35mServer connection established.\033[0m\n");
+	if (!count && len > 100)	
 		printf("\033[38;5;130m[%i%%]\033[0m\n", count);
-	}
 	if (count == 10)
 		printf("\033[38;5;220m[%i%%]\033[0m\n", count);
 	if (count == 20)

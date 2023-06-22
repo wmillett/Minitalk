@@ -6,7 +6,7 @@
 /*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/21 23:50:56 by lightyagami      ###   ########.fr       */
+/*   Updated: 2023/06/22 02:18:50 by lightyagami      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_handle_pid g_serv;
 
-static void	atob(pid_t serv_pid, char *str, int time)
+static inline void	atob(pid_t serv_pid, char *str, int time)
 {
 	int		i;
 	char	c;
@@ -87,11 +87,11 @@ static void	sighandler(int signum)
 	{
 		i++;
 		if (!i)
-			print_prog(count);
+			print_prog(count, g_serv.len);
 		if (i >= (g_serv.len/10) && g_serv.len > 100)
 		{
 			count += 10;
-			print_prog(count);
+			print_prog(count, g_serv.len);
 			i = 0;
 		}
 		g_serv.initm = 1;
@@ -117,7 +117,6 @@ int	main(int argc, char **argv)
 	time = sort_time(g_serv.len);
 	itob(serv_pid, g_serv.len, time);
 	atob(serv_pid, argv[2], time);
-	usleep(500);
 	if (g_serv.initm)
 		usleep(g_serv.len * time);
 	else

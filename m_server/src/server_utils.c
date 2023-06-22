@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:34:21 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/20 21:11:27 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/22 01:13:26 by lightyagami      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
