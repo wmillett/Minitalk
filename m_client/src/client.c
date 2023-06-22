@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/20 23:57:08 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:50:56 by lightyagami      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	sighandler(int signum)
 	static int count = 0;
 
 	if (!g_serv.initm)
-		i = 0;
+		i = -1;
 	if (signum == SIGUSR1)
 	{
 		printf("\033[1;34mMessage received sucessfully!\033[0m\n");
@@ -85,14 +85,14 @@ static void	sighandler(int signum)
 	}
 	if (signum == SIGUSR2)
 	{
+		i++;
 		if (!i)
-			printf("\033[1;35mServer connection established.\033[0m\n");
-		i += 1;
+			print_prog(count);
 		if (i >= (g_serv.len/10) && g_serv.len > 100)
 		{
 			count += 10;
-			printf("\033[33m[%i%%]\033[0m\n", count);
-			i = 1;
+			print_prog(count);
+			i = 0;
 		}
 		g_serv.initm = 1;
 	}

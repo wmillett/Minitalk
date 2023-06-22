@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 20:49:52 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/20 21:00:13 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:48:16 by lightyagami      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,33 @@ void	sendsignal(pid_t serv_pid, int signal_number, int time)
 	else
 		kill(serv_pid, signal_number);
 	usleep(time);
+}
+
+void print_prog(int count)
+{
+	if (count == 0)
+	{
+		printf("\033[1;35mServer connection established.\033[0m\n");
+		printf("\033[38;5;130m[%i%%]\033[0m\n", count);
+	}
+	if (count == 10)
+		printf("\033[38;5;220m[%i%%]\033[0m\n", count);
+	if (count == 20)
+		printf("\033[38;5;184m[%i%%]\033[0m\n", count);
+	if (count == 30)
+		printf("\033[33m[%i%%]\033[0m\n", count);
+	if (count == 40)
+		printf("\033[38;5;226m[%i%%]\033[0m\n", count);
+	if (count == 50)
+		printf("\033[38;5;154m[%i%%]\033[0m\n", count);
+	if (count == 60)
+		printf("\033[38;5;112m[%i%%]\033[0m\n", count);
+	if (count == 70)
+		printf("\033[38;5;82m[%i%%]\033[0m\n", count);
+	if (count == 80)
+		printf("\033[38;5;46m[%i%%]\033[0m\n", count);
+	if (count == 90)
+		printf("\033[38;5;40m[%i%%]\033[0m\n", count);
+	if (count == 100)
+		printf("\033[1;32m[%i%%]\033[0m\n", count);
 }
