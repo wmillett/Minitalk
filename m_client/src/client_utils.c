@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lightyagami <lightyagami@student.42.fr>    +#+  +:+       +#+        */
+/*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 20:49:52 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/22 01:32:33 by lightyagami      ###   ########.fr       */
+/*   Updated: 2023/06/22 22:34:03 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	sendsignal(pid_t serv_pid, int signal_number, int time)
 	usleep(time);
 }
 
-void print_prog(int count, int len)
+void	print_prog(int count, int len)
 {
 	if (!count)
 		printf("\033[1;35mServer connection established.\033[0m\n");
-	if (!count && len > 100)	
+	if (!count && len > 100)
 		printf("\033[38;5;130m[%i%%]\033[0m\n", count);
 	if (count == 10)
 		printf("\033[38;5;220m[%i%%]\033[0m\n", count);
