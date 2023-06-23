@@ -6,7 +6,7 @@
 /*   By: wmillett <wmillett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:32:10 by wmillett          #+#    #+#             */
-/*   Updated: 2023/06/22 22:34:08 by wmillett         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:29:29 by wmillett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,8 @@ static void	handle_exit(int type)
 static void	sighandler(int signum)
 {
 	static int	i;
-	static int	count;
+	static int	count = 0;
 
-	count = 0;
 	if (!g_serv.initm)
 		i = -1;
 	if (signum == SIGUSR1)
